@@ -12,15 +12,27 @@ defmodule Discuss.AuthController do
     }
 
     changeset = User.changeset(%User{}, user_params)
-
+    sign_in(conn, changeset)
   end
 
-  def request(conn, params) do
+  # private methods
+  defp sign_in(conn, changeset) do
+    case upsert_user(changeset) do
+      {:ok, user} ->
+        conn
+        |> put_flash(:info, "Welcome back!")
+        |> put_session(:user_id, user.id)
+        |> redirect(to: topic_path(conn, :index))
+
+      {:error, _reason} ->
+        conn
+        |> put_flash(:error, "Error while signing in!")
+        |> redirect(to: topic_path(conn, :index))
+    end
 
   end
 
   defp upsert_user(changeset) do
-    IO.inspect(changeset)
     case Repo.get_by(User, email: changeset.changes.email) do
       nil ->
         Repo.insert(changeset)
@@ -28,6 +40,5 @@ defmodule Discuss.AuthController do
         {:ok, user}
     end
   end
-
 
 end
