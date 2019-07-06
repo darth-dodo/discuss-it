@@ -28,4 +28,20 @@ defmodule Discuss.TopicController do
     end
   end
 
+  def edit(conn, %{"id" => topic_id}) do
+
+    # get the topic from the Repo
+    topic = Repo.get(Topic, topic_id)
+
+    # convert it into a structure using the changeset method
+    changeset = Topic.changeset(topic)
+
+    # push this out to the template/form helper
+    render conn, "edit.html", changeset: changeset, topic: topic
+  end
+
+  def update(conn, _params) do
+    render conn
+  end
+
 end
