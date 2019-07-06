@@ -6,6 +6,8 @@
             <%= topic.title %>
             <div class="right">
             <%= link "Edit", to: topic_path(@conn, :edit, topic) %>
+            <%# link tag always makes a GET request %>
+            <%= link "Delete", method: :delete, to: topic_path(@conn, :delete, topic) %>
             </div>
         </li>
     <% end %>
