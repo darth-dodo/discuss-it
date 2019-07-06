@@ -46,6 +46,7 @@ defmodule Discuss.TopicController do
     # old_topic = Repo.get(Topic, topic_id)
     # changeset = Topic.changeset(old_topic, topic)
 
+    old_topic = Repo.get(Topic, topic_id)
     changeset = Repo.get(Topic, topic_id) |> Topic.changeset(topic)
 
     case Repo.update(changeset) do
@@ -55,7 +56,7 @@ defmodule Discuss.TopicController do
         |> redirect(to: topic_path(conn, :index))
 
       {:error, changeset} ->
-        render conn, "edit.html", changeset: changeset
+        render conn, "edit.html", changeset: changeset, topic: old_topic
     end
 
   end
