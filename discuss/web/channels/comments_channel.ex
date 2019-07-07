@@ -21,12 +21,7 @@ defmodule Discuss.CommentsChannel do
   def handle_in(name, %{"content" => content}, socket) do
     # name is the topic and subtopic of pubsub
     # message is the payload
-    IO.puts(name)
-    IO.inspect(content)
-
     topic = socket.assigns.topic
-
-    IO.inspect(topic)
 
     changeset = topic
     |> build_assoc(:comments)
@@ -34,6 +29,7 @@ defmodule Discuss.CommentsChannel do
 
     case Repo.insert(changeset) do
       {:ok, comment} ->
+        broadcast!(socket, "comments:#{topic.id}:new", %{comment: comment})
         {:reply, :ok, socket}
       {:error, _reason} ->
         {:reply, {:error, %{errors: changeset}}, socket}
