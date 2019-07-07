@@ -4,15 +4,22 @@ defmodule Discuss.AuthController do
 
   alias Discuss.User
 
+  # assigns property is used to stash data between different parts of our app
   def callback(%{assigns: %{ueberauth_auth: auth }} = conn, params) do
     user_params = %{
       token: auth.credentials.token,
       email: auth.info.email,
-      provider: params["provider"]
+      provider: get_provider(params)
     }
 
     changeset = User.changeset(%User{}, user_params)
     sign_in(conn, changeset)
+  end
+
+  def logout(conn, _params) do
+    conn
+    |> configure_session(drop: true) #any session attrs tied to the conn, drop it out.
+    |> redirect(to: topic_path(conn, :index))
   end
 
   # private methods
@@ -30,6 +37,10 @@ defmodule Discuss.AuthController do
         |> redirect(to: topic_path(conn, :index))
     end
 
+  end
+
+  defp get_provider(params) do
+    params["provider"]
   end
 
   defp upsert_user(changeset) do
