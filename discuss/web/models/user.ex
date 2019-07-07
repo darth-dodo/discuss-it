@@ -6,6 +6,8 @@ defmodule Discuss.User do
     field :email, :string
     field :provider, :string
     field :token, :string
+    # user has many topics and should use Discuss.Topic module struct
+    has_many :topics, Discuss.Topic
 
     timestamps()
   end
