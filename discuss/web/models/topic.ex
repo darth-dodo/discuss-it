@@ -4,6 +4,8 @@ defmodule Discuss.Topic do
   schema "topics" do
     field :title, :string
     belongs_to :user, Discuss.User
+
+    has_many :comments, Discuss.Comment
   end
 
   # if the topic instance is not passed, return an empty topic structure
