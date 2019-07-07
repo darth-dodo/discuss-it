@@ -16,6 +16,12 @@ defmodule Discuss.AuthController do
     sign_in(conn, changeset)
   end
 
+  def logout(conn, _params) do
+    conn
+    |> configure_session(drop: true) #any session attrs tied to the conn, drop it out.
+    |> redirect(to: topic_path(conn, :index))
+  end
+
   # private methods
   defp sign_in(conn, changeset) do
     case upsert_user(changeset) do

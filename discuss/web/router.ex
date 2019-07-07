@@ -25,6 +25,9 @@ defmodule Discuss.Router do
 
   scope "/auth", Discuss do
     pipe_through :browser
+
+    # at top to prevent being considered as wild card
+    get "/logout", AuthController, :logout
     get "/:provider", AuthController, :request
     get "/:provider/callback", AuthController, :callback
   end
