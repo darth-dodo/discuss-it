@@ -6,11 +6,13 @@ defmodule Discuss.CommentsChannel do
   # pattern matching to join the strings in elixir
   def join("comments:" <> topic_id, _params, socket) do
     topic_id = String.to_integer(topic_id)
-    topic = Repo.get(Topic, topic_id)
+    topic = Topic
+      |> Repo.get(topic_id)
+      |> Repo.preload(:comments)
 
     {
       :ok,
-      %{ "topic_id" => topic.id},
+      %{ comments: topic.comments },
       assign(socket, :topic, topic)
     }
 
