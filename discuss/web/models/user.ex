@@ -8,6 +8,7 @@ defmodule Discuss.User do
     field :token, :string
     # user has many topics and should use Discuss.Topic module struct
     has_many :topics, Discuss.Topic
+    has_many :comments, Discuss.Comment
 
     timestamps()
   end
