@@ -1,21 +1,25 @@
 defmodule Discuss.CommentsChannel do
   use Discuss.Web, :channel
+  alias Discuss.Topic
 
-  def join(name, _params, socket) do
-    IO.puts(name)
+  # pattern matching to join the strings in elixir
+  def join("comments:" <> topic_id, _params, socket) do
+    topic_id = String.to_integer(topic_id)
+    topic = Repo.get(Topic, topic_id)
+
     {
       :ok,
-      %{"hello" => "world"},
+      %{ "topic_id" => topic.id},
       socket
     }
 
   end
 
-  def handle_in(name, message, socket) do
+  def handle_in(name, %{"content" => content}, socket) do
     # name is the topic and subtopic of pubsub
     # message is the payload
     IO.puts(name)
-    IO.inspect(message)
+    IO.inspect(content)
 
     {:reply, :ok, socket}
   end
