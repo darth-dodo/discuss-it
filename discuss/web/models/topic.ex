@@ -3,6 +3,7 @@ defmodule Discuss.Topic do
 
   schema "topics" do
     field :title, :string
+    belongs_to :user, Discuss.User
   end
 
   # if the topic instance is not passed, return an empty topic structure
