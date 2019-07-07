@@ -5,7 +5,7 @@
         <li class="collection-item">
             <%= link topic.title, to: topic_path(@conn, :show, topic ) %>
 
-            <%= if topic.user_id &&   @conn.assigns.current_user.id == topic.user_id do %>
+            <%= if topic.user_id && @conn.assigns.current_user && @conn.assigns.current_user.id == topic.user_id do %>
                 <div class="right">
                 <%= link "Edit", to: topic_path(@conn, :edit, topic) %>
                 <%# link tag always makes a GET request %>
