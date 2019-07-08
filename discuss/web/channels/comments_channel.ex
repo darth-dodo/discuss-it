@@ -22,9 +22,10 @@ defmodule Discuss.CommentsChannel do
     # name is the topic and subtopic of pubsub
     # message is the payload
     topic = socket.assigns.topic
+    current_user_id = socket.assigns.current_user_id
 
     changeset = topic
-    |> build_assoc(:comments)
+    |> build_assoc(:comments, user_id: current_user_id) # Ecto. build_assoc only takes in one association and cannot be piped :|
     |> Comment.changeset(%{content: content})
 
     case Repo.insert(changeset) do
