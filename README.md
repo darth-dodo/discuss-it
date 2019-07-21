@@ -13,13 +13,13 @@ Currently, the project contains the following:
 - Auth protected comments and topic deletion and edit functionalities
 
 Next Steps:
-- [ ] Deployment on Heroku/AWS
-- [ ] OAuth using Google
-- [ ] Scopes on models and more Ecto goodies
-- [ ] Caching Topics
-- [ ] Email service
-- [ ] Notifications/Subscription services
-- [ ] Async functionality for non blocking operations like sending emails, pushing things, creating newletters to cache etc.
+-[ ] Deployment on Heroku/AWS
+-[ ] OAuth using Google
+-[ ] Scopes on models and more Ecto goodies
+-[ ] Caching Topics
+-[ ] Email service
+-[ ] Notifications/Subscription services
+-[ ] Async functionality for non blocking operations like sending emails, pushing things, creating newletters to cache etc.
 
 
 Image Creds: [CarbonFive](https://blog.carbonfive.com/2016/04/19/elixir-and-phoenix-the-future-of-web-apis-and-apps/)
